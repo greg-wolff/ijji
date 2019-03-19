@@ -32,7 +32,7 @@
         <div class='right'>${{total}}</div>
         <div class='clear-both'></div>
       </div>
-      <a class='checkoutButton' target='_blank' :href='cart.webUrl'>Checkout</a>
+      <a class='checkoutButton' target='_self' :href='cart.webUrl'>Checkout</a>
     </div>
     <div v-else>
     Cart is empty
