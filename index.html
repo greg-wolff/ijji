@@ -18,7 +18,24 @@
           'linker': {
               'domains': ['myshopify.com']
           }
-      });      
+      });
+      
+      // Add GA pageview tracking for every URL change
+      if (history && history.pushState) {
+          history.pushState = (function(f) {
+              return function pushState(){
+                  var ret = f.apply(this, arguments);
+                  window.dispatchEvent(new Event('locationchange'));
+                  return ret;
+              }
+          })(history.pushState);
+      }
+
+      window.addEventListener('locationchange', function(){
+          if (typeof gtag === 'function') {
+              gtag('config', 'UA-86252748-1', {'page_path': window.location.pathname});
+          }
+      })
     </script>
   </head>
   <body id='body'>
