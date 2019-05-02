@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/collections/All">
+  <router-link to="/collections/New">
   <div id='home' :style='bg' :class="{loading: !imgLoaded}"></div>
   </router-link>
 </template>
