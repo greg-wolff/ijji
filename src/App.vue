@@ -97,13 +97,19 @@ export default {
         let products = await this.$client.product.fetchAll()
         this.products.push(...products)
         this.checkoutId = localStorage.getItem('checkoutId')
+        let checkout = null
         if (!this.checkoutId) {
-          let checkout = await this.$client.checkout.create()
+          checkout = await this.$client.checkout.create()
+          this.checkoutId = checkout.id
+          localStorage.setItem('checkoutId', this.checkoutId) // Store the ID in localStorage
+        }
+        checkout = await this.$client.checkout.fetch(this.checkoutId)
+        if (checkout.completedAt) {
+          checkout = await this.$client.checkout.create()
           this.checkoutId = checkout.id
           localStorage.setItem('checkoutId', this.checkoutId) // Store the ID in localStorage
         }
         this.cart = await this.$client.checkout.fetch(this.checkoutId)
-
         let collections = await this.$client.collection.fetchAllWithProducts()
         this.collections.push(...collections)
       } catch (error) {
